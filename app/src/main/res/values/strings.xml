@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">BloodApp</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_login_sign">Cadastro</string>
+    <string name="title_activity_login_forget">Esqueceu sua senha ?</string>
+    <string name="password">Senha</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="signin">Cadastrar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="concluir">Concluir</string>
+    <string name="name">Nome</string>
+    <string name="surename">Sobrenome</string>
+    <string name="contact_phone">Telefone de Contato</string>
+    <string name="gender">Sexo</string>
+    <string name="blood_type">Tipo Sanguíneo</string>
+    <string name="birthdate">Data de Nascimento</string>
+    <string name="ask_illness">Possui alguma doença</string>
+    <string name="ask_illness2">Qual ?</string>
+</resources>
