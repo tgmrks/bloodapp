@@ -17,4 +17,11 @@
     <string name="birthdate">Data de Nascimento</string>
     <string name="ask_illness">Possui alguma doença</string>
     <string name="ask_illness2">Qual ?</string>
+
+
+    <string name="imports">Qual ?</string>
+    <string name="gallery">Qual ?</string>
+    <string name="slideshow">Qual ?</string>
+    <string name="tools">Qual ?</string>
+
 </resources>
