@@ -3,20 +3,32 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_login_sign">Cadastro</string>
     <string name="title_activity_login_forget">Esqueceu sua senha ?</string>
+    <!-- Formulários -->
     <string name="password">Senha</string>
+    <string name="invalid_password">Senha inválida</string>
     <string name="email">Email</string>
+    <string name="invalid_email">Email inválido</string>
     <string name="login">Login</string>
     <string name="signin">Cadastrar</string>
     <string name="cancelar">Cancelar</string>
     <string name="concluir">Concluir</string>
     <string name="name">Nome</string>
+    <string name="invalid_name">Nome inválido</string>
     <string name="surename">Sobrenome</string>
+    <string name="invalid_surename">Sobrenome inválido</string>
     <string name="contact_phone">Telefone de Contato</string>
+    <string name="invalid_contact_phone">Telefone inválido</string>
     <string name="gender">Sexo</string>
     <string name="blood_type">Tipo Sanguíneo</string>
     <string name="birthdate">Data de Nascimento</string>
+    <string name="invalid_birthdate">Data de Nascimento inválida</string>
     <string name="ask_illness">Possui alguma doença</string>
     <string name="ask_illness2">Qual ?</string>
+
+    <string name="required_field">campo obrigatório</string>
+    <string name="invalid_field">inválido</string>
+    <string name="check_valid_field">Verificar campo(s) obrigatório(s)</string>
+    <!-- -->
 
 
     <string name="imports">Qual ?</string>
