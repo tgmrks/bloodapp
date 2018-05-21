@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bloodtype">
+        <item>Não Informado</item>
+        <item>A+</item>
+        <item>B+</item>
+        <item>O+</item>
+        <item>AB+</item>
+        <item>A-</item>
+        <item>B-</item>
+        <item>O-</item>
+        <item>AB-</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Outros</item>
+        <item>M</item>
+        <item>F</item>
+    </string-array>
+</resources>
+
+

@@ -10,30 +10,29 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bloodapp.Model.Profile;
 import com.bloodapp.util.Utilities;
 import com.bloodapp.util.Validator;
 
-public class SignActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
-    private Button buttonConfirm;
-    private Button buttonCancel;
-    private Spinner spnBloodType;
-    private Spinner spnGender;
-
-    private EditText etName;
+    private EditText etFirstname;
     private EditText etSurename;
     private EditText etEmail;
     private EditText etPass;
     private EditText etContact;
     private EditText etBirthdate;
     private EditText etIllness;
-    private CheckBox cbIllness;
+
+    private Spinner spnGender;
+    private Spinner spnBloodType;
+
+    private Button btnCancel;
+    private Button btnConfirm;
 
     private SharedPreferences profilePref;
 
@@ -43,63 +42,58 @@ public class SignActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign);
+        setContentView(R.layout.activity_profile);
 
-        buttonConfirm = (Button) findViewById(R.id.buttonSignConfirm);
-        buttonCancel = (Button) findViewById(R.id.buttonSignCancel);
+        etFirstname = (EditText) findViewById(R.id.profile_edit_name);
+        etSurename = (EditText) findViewById(R.id.profile_edit_surename);
+        etEmail = (EditText) findViewById(R.id.profile_edit_email);
+        etPass = (EditText) findViewById(R.id.profile_edit_pass);
+        etContact = (EditText) findViewById(R.id.profile_edit_contact);
+        etBirthdate = (EditText) findViewById(R.id.profile_edit_birthdate);
+        etIllness = (EditText) findViewById(R.id.profile_edit_illness);
 
-        spnBloodType = (Spinner) findViewById(R.id.spinnerSignBloodType);
-        spnGender = (Spinner) findViewById(R.id.spinnerSignGender);
-        loadSpinner();
+        spnBloodType = (Spinner) findViewById(R.id.profile_spinner_bloodtype);
+        spnGender = (Spinner) findViewById(R.id.profile_spinner_gender);
 
-        etName = (EditText) findViewById(R.id.editSignFirstName);
-        etSurename = (EditText) findViewById(R.id.editSignSurename);
-        etEmail = (EditText) findViewById(R.id.editSignEmail);
-        etPass = (EditText) findViewById(R.id.editSignPass);
-        etContact = (EditText) findViewById(R.id.editSignContact);
-        etBirthdate = (EditText) findViewById(R.id.editSignAge);
-        etIllness = (EditText) findViewById(R.id.editSignWhatIllness);
+        btnCancel = (Button) findViewById(R.id.profile_button_cancel);
+        btnConfirm = (Button) findViewById(R.id.profile_button_confirm);
 
-        cbIllness = (CheckBox) findViewById(R.id.checkBoxSignIllness);
-        cbIllness.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
+        etEmail.setKeyListener(null);
+        etPass.setKeyListener(null);
+
+        loadProfilePref();
+
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                if ( isChecked ) etIllness.setVisibility(cbIllness.isChecked() ? View.VISIBLE : View.GONE);
+            public void onClick(View view) {
+                startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
+                finish();
             }
         });
 
-        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(fieldValidation(etEmail.getText().toString(),
                         etPass.getText().toString(),
-                        etName.getText().toString(),
+                        etFirstname.getText().toString(),
                         etBirthdate.getText().toString()
                 )) {
                     saveProfilePref();
-                    startActivity(new Intent(SignActivity.this, HomeActivity.class));
+                    startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
                     finish();
                 }
                 else
-                    Toast.makeText(SignActivity.this, getResources().getString(R.string.check_valid_field), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileActivity.this, getResources().getString(R.string.check_valid_field), Toast.LENGTH_LONG).show();
 
-            }
-        });
-
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SignActivity.this, LoginActivity.class));
-                finish();
             }
         });
 
         spnGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                   selectedGender = spnGender.getSelectedItem().toString();
+                selectedGender = spnGender.getSelectedItem().toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
@@ -112,17 +106,47 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
+
+
     }
 
-    private void loadSpinner() {
+    private void loadProfilePref(){
+        profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
+        etEmail.setText(profilePref.getString(Utilities.EMAIL, ""));
+        etPass.setText(profilePref.getString(Utilities.PASSWORD, ""));
+        etFirstname.setText(profilePref.getString(Utilities.NAME, ""));
+        etSurename.setText(profilePref.getString(Utilities.SURENAME, ""));
+        etContact.setText(profilePref.getString(Utilities.CONTACT, ""));
+        etBirthdate.setText(profilePref.getString(Utilities.BIRTHDATE, ""));
+        etIllness.setText(profilePref.getString(Utilities.ILLNESS, ""));
+
+        String gender = profilePref.getString(Utilities.GENDER, "");
+        String bloodType = profilePref.getString(Utilities.BLOODTYPE, "");
+
+        loadSpinner(gender, bloodType);
+    }
+
+    private void loadSpinner(String gender, String bloodType) {
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.bloodtype, android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnBloodType.setAdapter(adapter1);
 
+        if (!bloodType.equals("")) {
+            int spinnerPostion = adapter1.getPosition(gender);
+            spnBloodType.setSelection(spinnerPostion);
+            spinnerPostion = 0;
+        }
+
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnGender.setAdapter(adapter2);
+
+        if (!gender.equals("")) {
+            int spinnerPostion = adapter2.getPosition(gender);
+            spnGender.setSelection(spinnerPostion);
+            spinnerPostion = 0;
+        }
     }
 
     private boolean fieldValidation(String email, String pass, String name, String birthdate) {
@@ -149,7 +173,7 @@ public class SignActivity extends AppCompatActivity {
             validName = true;
         }
         else
-            etName.setError(getResources().getString(R.string.invalid_name));
+            etFirstname.setError(getResources().getString(R.string.invalid_name));
 
         //Check birth date
         if(Validator.validateText(birthdate))
@@ -162,7 +186,7 @@ public class SignActivity extends AppCompatActivity {
 
     private void saveProfilePref() {
         profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
-        profilePref.edit().putString(Utilities.NAME, etName.getText().toString()).commit();
+        profilePref.edit().putString(Utilities.NAME, etFirstname.getText().toString()).commit();
         profilePref.edit().putString(Utilities.SURENAME, etSurename.getText().toString()).commit();
         profilePref.edit().putString(Utilities.EMAIL, etEmail.getText().toString()).commit();
         profilePref.edit().putString(Utilities.PASSWORD, etPass.getText().toString()).commit();

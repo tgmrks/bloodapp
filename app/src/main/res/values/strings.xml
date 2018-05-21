@@ -30,10 +30,49 @@
     <string name="check_valid_field">Verificar campo(s) obrigatório(s)</string>
     <!-- -->
 
+    <string name="home">Home</string>
+    <string name="profile">Perfil</string>
+    <string name="about">Sobre</string>
+    <string name="config">Configurações</string>
 
-    <string name="imports">Qual ?</string>
-    <string name="gallery">Qual ?</string>
-    <string name="slideshow">Qual ?</string>
-    <string name="tools">Qual ?</string>
+    <string name="StringVersaoApp">BloodApp versão Alfa</string>
+    <string name="stringContactTitle">Contato: </string>
+
+
+    <string name="StringQuemSomos">
+O BloodApp é um aplicativo mobile no qual seu foco é facilitar a chegada da informação dos hospitais e hemocentros até os doadores de sangue. Através de notificações, que chegam ao celular dos usuários cadastrados, será informado o local para se fazer a doação e a rota para chegar até o hospital ou hemocentro, campanhas de doação também são divulgadas através dos alertas enviados aos doadores.
+Hemocentros e hospitais podem se cadastrar via página web para enviar os alertas e criar campanhas
+    </string>
+
+    <string name="stringAbout1">
+        \tA divulgação de espetáculos teatrais pode ser realizada por meios
+físicos, como cartazes, outdoors, folders, banners; ou também, outros meios,
+como anúncios e comerciais de TV, rádio, entre outros. Meios que necessitam
+que o público consumidor esteja no lugar certo ou na hora certa para obter
+conhecimento de tal evento. A internet, por outro lado, permite que
+a informação esteja disponível em sites e redes sociais, sem tais limitações.
+    </string>
+    <string name="stringAbout2">
+        \tA proposta do aplicativo Meu Teatro, apoia-se justamente nesta
+premissa que a internet apresenta. O Meu Teatro trará informações de peças teatrais organizadas por cidade ou
+teatro, de escolha de cada usuário. O aplicativo irá permitir que as pessoas se
+informem com mais praticidade, uma vez que, toda informação que precisam
+estará organizada e reunida em seu smartphone.
+    </string>
+    <string name="stringAbout3">
+        \tVendo pelo lado dos interessados em divulgar os espetáculos teatrais, o
+aplicativo fornecerá aos teatros uma oportunidade de levar sua agenda teatral
+aos smartphones de seu público consumidor, agregando um importante meio de
+divulgação.
+    </string>
+    <string name="stringAbout4">
+        \tEste projeto está em fase de desenvolvimento, e trabalhamos para prover um serviço que agrege maior praticidade
+para pessoas com interece neste tipo de entretenimento e, também, para cias de teatro que busquem
+uma forma eficiente de divulgar seus eventos.
+    </string>
+    <string name="stringContact">
+Daniel Tavelli\n(xx)xxxxx-xxxx\ndan.tavelli.2@gmail.com
+    </string>
+
 
 </resources>
