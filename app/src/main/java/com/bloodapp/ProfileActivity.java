@@ -1,15 +1,20 @@
 package com.bloodapp;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -17,6 +22,8 @@ import android.widget.Toast;
 import com.bloodapp.Model.Profile;
 import com.bloodapp.util.Utilities;
 import com.bloodapp.util.Validator;
+
+import java.util.Calendar;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -38,6 +45,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String selectedGender;
     private String selectedBloodtype;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +115,40 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
+
+
+        etBirthdate.setInputType(InputType.TYPE_NULL);
+
+        etBirthdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        ProfileActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        //android.R.style.Theme_Holo_Light_Dialog,
+                        //AlertDialog.THEME_TRADITIONAL,
+                        //AlertDialog.THEME_HOLO_LIGHT,
+                        mDateSetListener, year, month, day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month +=1 ;
+                String selectedDate = day + "/" + month + "/" + year;
+                Log.i("DATE", "date selected dd/mm/yyyy " + selectedDate);
+                etBirthdate.setText(selectedDate);
+            }
+        };
 
 
     }

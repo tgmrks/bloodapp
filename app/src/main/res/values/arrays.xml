@@ -13,8 +13,8 @@
     </string-array>
     <string-array name="gender">
         <item>Outros</item>
-        <item>M</item>
-        <item>F</item>
+        <item>Masculino</item>
+        <item>Feminino</item>
     </string-array>
 </resources>
 

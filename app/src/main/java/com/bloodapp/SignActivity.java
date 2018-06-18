@@ -1,10 +1,15 @@
 package com.bloodapp;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,7 +25,11 @@ import android.widget.Toast;
 import com.bloodapp.util.Utilities;
 import com.bloodapp.util.Validator;
 
+import java.util.Calendar;
+
 public class SignActivity extends AppCompatActivity {
+
+    private static final String TAG = "SignActivity";
 
     private Button buttonConfirm;
     private Button buttonCancel;
@@ -39,6 +49,8 @@ public class SignActivity extends AppCompatActivity {
 
     private String selectedGender;
     private String selectedBloodtype;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +72,47 @@ public class SignActivity extends AppCompatActivity {
         etBirthdate = (EditText) findViewById(R.id.editSignAge);
         etIllness = (EditText) findViewById(R.id.editSignWhatIllness);
 
+        etBirthdate.setInputType(InputType.TYPE_NULL);
+
+        etBirthdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        SignActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        //android.R.style.Theme_Holo_Light_Dialog,
+                        //AlertDialog.THEME_TRADITIONAL,
+                        //AlertDialog.THEME_HOLO_LIGHT,
+                        mDateSetListener, year, month, day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month +=1 ;
+                String selectedDate = day + "/" + month + "/" + year;
+                Log.i("DATE", "date selected dd/mm/yyyy " + selectedDate);
+                etBirthdate.setText(selectedDate);
+            }
+        };
+
         cbIllness = (CheckBox) findViewById(R.id.checkBoxSignIllness);
         cbIllness.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                if ( isChecked ) etIllness.setVisibility(cbIllness.isChecked() ? View.VISIBLE : View.GONE);
+                if ( isChecked ) etIllness.setVisibility(View.VISIBLE); else etIllness.setVisibility(View.GONE);
+                Log.i("CHECKBOX", "etIllness.setVisibility " + isChecked);
             }
         });
 

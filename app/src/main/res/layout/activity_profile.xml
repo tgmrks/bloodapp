@@ -105,14 +105,15 @@
                 <TextView
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
-                    android:layout_height="12dp"
+                    android:layout_height="wrap_content"
                     android:text="E-mail" />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:ems="10"
                     android:id="@+id/profile_edit_email"
+                    android:textColor="@color/greyer"
                     />
 
                 <TextView
@@ -124,9 +125,11 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPassword"
                     android:ems="10"
-                    android:id="@+id/profile_edit_pass" />
+                    android:id="@+id/profile_edit_pass"
+                    android:textColor="@color/greyer"
+                    />
 
             </LinearLayout>
 
@@ -213,7 +216,7 @@
                     android:text="Genero"
                     android:id="@+id/tv_gender" />
                 <Spinner
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/spinners1"
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_spinner_gender" />
 
@@ -226,7 +229,7 @@
                     android:layout_toRightOf="@+id/edit_birth"
                     android:layout_toEndOf="@+id/edit_birth" />
                 <Spinner
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/spinners1"
                     android:layout_height="wrap_content"
                     android:id="@+id/profile_spinner_bloodtype"
                     />
@@ -234,6 +237,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_min"
                     android:text="@string/ask_illness"
                     android:id="@+id/tv_city"
                     android:layout_below="@+id/edit_birth"
@@ -242,7 +246,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:layout_marginBottom="25dp"
+                    android:layout_marginBottom="@dimen/margin_max"
                     android:ems="10"
                     android:id="@+id/profile_edit_illness"
                     />

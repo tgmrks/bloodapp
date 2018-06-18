@@ -31,14 +31,12 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Log.i("TESTE", "HOME ACTIVITY");
-        System.out.print("TESSSSSSSSSSSTTTTTEEEEEEEEEEEEEEE HOMEACTIVITY");
-
         //Menu Button
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
         //Actual Nav. Drawer
