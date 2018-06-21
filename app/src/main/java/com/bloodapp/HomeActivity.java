@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //Menu Button
+        //Definição do Toolbar (cabeçalho) e Menu Button
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -39,29 +39,12 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
 
-        //Actual Nav. Drawer
+        //referencia ao layout do drawer
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+        //definição do Navigation Drawer (menu lateral)
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-     /*
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
-
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-
-                        return true;
-                    }
-                });
-*/
-
 
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
@@ -105,6 +88,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
+    //faz o menu lateral abrir quando clicar no menu button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i("TESTE", "on opt MENU");
@@ -113,27 +97,11 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-        /*
-            case R.id.nav_home:
-                mDrawerLayout.openDrawer(GravityCompat.START);//startActivity(new Intent(HomeActivity.this, HomeActivity.class));
-                return true;
-            case R.id.nav_profile:
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-                Log.i("TESTE", "PROFILE");
-                return true;
-            case R.id.nav_about:
-                startActivity(new Intent(HomeActivity.this, AboutActivity.class));
-                Log.i("TESTE", "ABOUT");
-                return true;
-            case R.id.nav_config:
-                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
-                Log.i("TESTE", "CONFIG");
-                return true;
-        */
         }
         return super.onOptionsItemSelected(item);
     }
 
+    //define o que deve acontece ao clicar em cada item do menu lateral
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

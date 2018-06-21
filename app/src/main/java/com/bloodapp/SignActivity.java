@@ -72,8 +72,9 @@ public class SignActivity extends AppCompatActivity {
         etBirthdate = (EditText) findViewById(R.id.editSignAge);
         etIllness = (EditText) findViewById(R.id.editSignWhatIllness);
 
+        //desabilita o input do teclado para a data de nascimento
         etBirthdate.setInputType(InputType.TYPE_NULL);
-
+        //define um calendario a ser exibido ao clicar na campo de data de nascimento
         etBirthdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +96,7 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
+        //captura o que foi preenchido no calendario da data de nascimento
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -105,7 +107,9 @@ public class SignActivity extends AppCompatActivity {
             }
         };
 
+
         cbIllness = (CheckBox) findViewById(R.id.checkBoxSignIllness);
+        //deixa campo 'doença' visivel ser o checkbox for marcado e invisivel se desmarcado
         cbIllness.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -142,6 +146,7 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
+        //obtem qual item foi selecionado do dropdown genero
         spnGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -150,6 +155,7 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
+        //obtem qual item foi selecionado do dropdown tipo sanguineo
         spnBloodType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -160,12 +166,13 @@ public class SignActivity extends AppCompatActivity {
         });
     }
 
+    //carrega as opçoes do dropdown
     private void loadSpinner() {
-
+        //carrega as opçoes do dropdown tipo sanguineo
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.bloodtype, android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnBloodType.setAdapter(adapter1);
-
+        //carrega as opçoes do dropdown genero
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnGender.setAdapter(adapter2);

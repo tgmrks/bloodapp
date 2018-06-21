@@ -17,20 +17,24 @@ import com.bloodapp.util.Validator;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //cria variaveis
+    //nivel de acesso / tipo / nome
     private EditText etEmail;
     private EditText etPass;
     private Button login;
     private Button sign;
 
+    //o SharedPreferences será usado para gravar os dados temporariamente
     private SharedPreferences profilePref;
 
+    //onCreate é o que cria toda a Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //aponta para o XML que representa esta activity
         setContentView(R.layout.activity_login);
 
-        System.out.print("TESSSSSSSSSSSTTTTTEEEEEEEEEEEEEEE LOGINACTIVITY");
-
+        //faz referencia para cada component do XML
         etEmail = (EditText) findViewById(R.id.editLoginEmail);
         etPass = (EditText) findViewById(R.id.editLoginPass);
 
@@ -39,9 +43,11 @@ public class LoginActivity extends AppCompatActivity {
 
         profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
 
+        //setOnClickListener é o que vai "ouvir" a interação do usuário com um componente, neste caso o botão login
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //dentro do setOnClickListener vc programa o que quer que aconteça quando o usuário clicar no botão/componente
                 if(fieldValidation(etEmail.getText().toString(), etPass.getText().toString())) {
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
