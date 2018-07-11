@@ -11,6 +11,8 @@ import com.bloodapp.util.Utilities;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     private SharedPreferences profilePref;
 
     @Override
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 }finally {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
+                    //TODO: Skip login when its logged in already
                 }
             }
         };

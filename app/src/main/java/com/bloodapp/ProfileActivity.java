@@ -27,6 +27,8 @@ import java.util.Calendar;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private static final String TAG = "ProfileActivity";
+
     private EditText etFirstname;
     private EditText etSurename;
     private EditText etEmail;
@@ -145,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month +=1 ;
                 String selectedDate = day + "/" + month + "/" + year;
-                Log.i("DATE", "date selected dd/mm/yyyy " + selectedDate);
+                Log.i(TAG + " DATE", "date selected dd/mm/yyyy " + selectedDate);
                 etBirthdate.setText(selectedDate);
             }
         };

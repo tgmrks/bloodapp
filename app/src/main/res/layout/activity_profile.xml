@@ -166,9 +166,9 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/profile_edit_name" />
+                    android:id="@+id/profile_edit_name"
+                    android:inputType="textCapSentences"/>
 
                 <TextView
                     android:id="@+id/tv_surename"
@@ -179,9 +179,9 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
                     android:ems="10"
-                    android:id="@+id/profile_edit_surename" />
+                    android:id="@+id/profile_edit_surename"
+                    android:inputType="textCapSentences"/>
 
                 <TextView
                     android:id="@+id/tv_contact"

@@ -18,8 +18,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bloodapp.util.Utilities;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "HomeActivity";
 
     private SharedPreferences profilePref;
 
@@ -51,47 +54,47 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
                     @Override
                     public void onDrawerSlide(View drawerView, float slideOffset) {
                         // Respond when the drawer's position changes
-                        Log.i("TESTE", "SLIDE");
+                        Log.i(TAG, "SLIDE");
                     }
 
                     @Override
                     public void onDrawerOpened(View drawerView) {
                         // Respond when the drawer is opened
-                        Log.i("TESTE", "OPEN");
+                        Log.i(TAG, "OPEN");
                     }
 
                     @Override
                     public void onDrawerClosed(View drawerView) {
                         // Respond when the drawer is closed
-                        Log.i("TESTE", "CLOSE");
+                        Log.i(TAG, "CLOSE");
                     }
 
                     @Override
                     public void onDrawerStateChanged(int newState) {
                         // Respond when the drawer motion state changes
-                        Log.i("TESTE", "CHANGE");
+                        Log.i(TAG, "CHANGE");
 
                     }
                 }
         );
 
         profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
-        Log.i("TESTE", profilePref.getString(Utilities.NAME, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.SURENAME, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.EMAIL, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.PASSWORD, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.CONTACT, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.GENDER, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.BLOODTYPE, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.BIRTHDATE, ""));
-        Log.i("TESTE", profilePref.getString(Utilities.ILLNESS, ""));
+        Log.i(TAG, profilePref.getString(Utilities.NAME, ""));
+        Log.i(TAG, profilePref.getString(Utilities.SURENAME, ""));
+        Log.i(TAG, profilePref.getString(Utilities.EMAIL, ""));
+        Log.i(TAG, profilePref.getString(Utilities.PASSWORD, ""));
+        Log.i(TAG, profilePref.getString(Utilities.CONTACT, ""));
+        Log.i(TAG, profilePref.getString(Utilities.GENDER, ""));
+        Log.i(TAG, profilePref.getString(Utilities.BLOODTYPE, ""));
+        Log.i(TAG, profilePref.getString(Utilities.BIRTHDATE, ""));
+        Log.i(TAG, profilePref.getString(Utilities.ILLNESS, ""));
 
     }
 
     //faz o menu lateral abrir quando clicar no menu button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i("TESTE", "on opt MENU");
+        Log.i(TAG, "on opt MENU");
 
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -106,7 +109,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
 
-        Log.i("TESTE", "on nav MENU");
+        Log.i(TAG, "on nav MENU");
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
@@ -114,19 +117,27 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         }
         else if (id == R.id.nav_profile) {
             startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-            Log.i("TESTE", "PROFILE");
+            Log.i(TAG, "PROFILE");
         }
         else if (id == R.id.nav_about) {
             startActivity(new Intent(HomeActivity.this, AboutActivity.class));
-            Log.i("TESTE", "ABOUT");
+            Log.i(TAG, "ABOUT");
         }
         else if (id == R.id.nav_config) {
             startActivity(new Intent(HomeActivity.this, HomeActivity.class));
-            Log.i("TESTE", "CONFIG");
+            Log.i(TAG, "CONFIG");
+        }
+        else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            Log.i(TAG, "CONFIG");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+//TODO: logout $FirebaseAuth.getInstance().signOut();
+
 }
