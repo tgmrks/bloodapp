@@ -3,10 +3,17 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_login_sign">Cadastro</string>
     <string name="title_activity_login_forget">Esqueceu sua senha ?</string>
+    <string name="email_reset">Informe seu Email para recuperação de senha</string>
+    <string name="email_reset_send">Você receberá um email para redefinição da senha</string>
+    <string name="pass_reset_send_button">Recuperação de Senha</string>
+    <string name="reset_pass_message">Email Enviado!!</string>
     <!-- Formulários -->
     <string name="password">Senha</string>
+    <string name="reenter_password">Confirmar Senha</string>
     <string name="invalid_password">Senha inválida</string>
+    <string name="mismatch_password">Senha diferente</string>
     <string name="email">Email</string>
+
     <string name="invalid_email">Email inválido</string>
     <string name="login">Login</string>
     <string name="signin">Cadastrar</string>
@@ -93,4 +100,20 @@ Daniel Tavelli\n(xx)xxxxx-xxxx\ndan.tavelli.2@gmail.com
      -->
     <string name="default_notification_channel_name" translatable="true">News</string>
     <string name="msg_subscribe_failed">Failed to subscribe to news topic</string>
+    <string name="firebase_auth_failure">Falha na Autenticação</string>
+    <string name="firebase_conn_failure">Falha de Conexão</string>
+    <string name="firebase_pass_failure">Senha Incorreta</string>
+    <string name="firebase_mail_failure">Email Incorreto</string>
+    <string name="firebase_create_mail_failure">Email já Cadastrado</string>
+    <string name="title_activity_reset">ResetActivity</string>
+
+    <string name="firebase_conn_failure_1">A network error (such as timeout, interrupted connection or unreachable host) has occurred.</string>
+    <string name="firebase_auth_failure_1">The password is invalid or the user does not have a password.</string>
+    <string name="firebase_auth_failure_2">There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="firebase_reset_failure_1">There is no user record corresponding to this identifier. The user may have been deleted.</string>
+    <string name="firebase_reset_failure_2">The email address is badly formatted.</string>
+    <string name="firebase_create_failure_1">The email address is already in use by another account.</string>
+
+    <string name="firebase_reset_mail_bad_formatted_failure">Email mal formatado!</string>
+    <string name="firebase_reset_mail_no_record_failure">Email não encontrado!</string>
 </resources>

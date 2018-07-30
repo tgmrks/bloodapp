@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "314228431652",
-    "firebase_url": "https://bloodapp-44200.firebaseio.com",
-    "project_id": "bloodapp-44200",
-    "storage_bucket": "bloodapp-44200.appspot.com"
+    "project_number": "880598623271",
+    "firebase_url": "https://bloodapp-software.firebaseio.com",
+    "project_id": "bloodapp-software",
+    "storage_bucket": "bloodapp-software.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:314228431652:android:f60a5c31df7d204a",
+        "mobilesdk_app_id": "1:880598623271:android:f60a5c31df7d204a",
         "android_client_info": {
           "package_name": "com.bloodapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "314228431652-ebrjirs6orj4vss473pmtlcn2v5oe7id.apps.googleusercontent.com",
+          "client_id": "880598623271-judjne9bt9k5hvp3vanhiq6m87kerh4c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bloodapp",
-            "certificate_hash": "c0a767c2d425a14e62ba211754bc0ea9cdd2e9a2"
+            "certificate_hash": "25bfd44e1c0e3c1aa913bd29b8ec4a9647fb4d41"
           }
         },
         {
-          "client_id": "314228431652-c16qtoch3hdn4n002dqb7ponoa1bhcr7.apps.googleusercontent.com",
+          "client_id": "880598623271-jos83uf3qag0jn9roocvu4oh0dfvkmmi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDhMzxYUpikBocKIS-TUf7oWH80r4demOk"
+          "current_key": "AIzaSyDoIC9eNx-8SM8h0e_oiirEDu837hsDlQY"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "314228431652-c16qtoch3hdn4n002dqb7ponoa1bhcr7.apps.googleusercontent.com",
+              "client_id": "880598623271-jos83uf3qag0jn9roocvu4oh0dfvkmmi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_margin="@dimen/margin_max"
     android:background="@color/white"
-    tools:context="com.bloodapp.LoginActivity">
+    tools:context="com.bloodapp.ResetActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -20,36 +20,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_max"
-        android:text="@string/email"
+        android:text="@string/email_reset"
         />
 
     <EditText
-        android:id="@+id/editLoginEmail"
+        android:id="@+id/editResetEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="15"
         android:inputType="textEmailAddress" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_max"
-        android:text="@string/password" />
-
-    <EditText
-        android:id="@+id/editLoginPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="15"
-        android:inputType="textPassword" />
-
-    <TextView
-        android:id="@+id/textViewResetPass"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/title_activity_login_forget"/>
+        android:text="@string/email_reset_send"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,24 +44,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonLogin"
+            android:id="@+id/buttonPassReset"
             android:background="@drawable/button_round_corner"
             android:textColor="@color/white"
             android:layout_margin="@dimen/margin_min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/login" />
-
-        <Button
-            android:id="@+id/buttonSign"
-            android:background="@drawable/button_round_corner"
-            android:textColor="@color/white"
-            android:layout_margin="@dimen/margin_min"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/signin" />
+            android:text="@string/pass_reset_send_button" />
 
     </LinearLayout>
 

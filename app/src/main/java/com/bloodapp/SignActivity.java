@@ -46,6 +46,7 @@ public class SignActivity extends AppCompatActivity {
     private EditText etSurename;
     private EditText etEmail;
     private EditText etPass;
+    private EditText etConfPass;
     private EditText etContact;
     private EditText etBirthdate;
     private EditText etIllness;
@@ -60,6 +61,8 @@ public class SignActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    private boolean createUser = false;
+    private boolean createProfile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class SignActivity extends AppCompatActivity {
         etSurename = (EditText) findViewById(R.id.editSignSurename);
         etEmail = (EditText) findViewById(R.id.editSignEmail);
         etPass = (EditText) findViewById(R.id.editSignPass);
+        etConfPass = (EditText) findViewById(R.id.editSignReenterPass);
         etContact = (EditText) findViewById(R.id.editSignContact);
         etBirthdate = (EditText) findViewById(R.id.editSignAge);
         etIllness = (EditText) findViewById(R.id.editSignWhatIllness);
@@ -136,10 +140,12 @@ public class SignActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = etEmail.getText().toString();
                 String password = etPass.getText().toString();
+                String confPassword = etConfPass.getText().toString();
                 String name = etName.getText().toString();
                 String birthday = etBirthdate.getText().toString();
-                if(fieldValidation(email, password, name, birthday)) {
+                if(fieldValidation(email, password, confPassword, name, birthday)) {
                     saveProfilePref();
+                    FirebaseCreateProfile("others");
                     FirebaseCreateUser(email, password);
                 }
                 else
@@ -190,11 +196,25 @@ public class SignActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(SignActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            String message = getResources().getString(R.string.firebase_auth_failure);
+                            String exception = task.getException().getMessage().toString();
+
+                            if (exception.equals(getResources().getString(R.string.firebase_create_failure_1)))
+                                message = getResources().getString(R.string.firebase_create_mail_failure);
+                            else if (exception.equals(getResources().getString(R.string.firebase_conn_failure_1)))
+                                message = getResources().getString(R.string.firebase_conn_failure);
+                            else
+                                message = task.getException().getMessage().toString();
+
+                            Toast.makeText(SignActivity.this, message, Toast.LENGTH_SHORT).show();
                         }
                         // ...
                     }
                 });
+    }
+
+    private boolean FirebaseCreateProfile(String others) {
+        return true;
     }
 
     //carrega as opçoes do dropdown
@@ -209,10 +229,12 @@ public class SignActivity extends AppCompatActivity {
         spnGender.setAdapter(adapter2);
     }
 
-    private boolean fieldValidation(String email, String pass, String name, String birthdate) {
+    private boolean fieldValidation(String email, String pass, String confpass, String name, String birthdate) {
 
         boolean validEmail = false;
         boolean validPass = false;
+        boolean validConfPass = false;
+        boolean passCheck = false;
         boolean validName = false;
         boolean validBirth = false;
 
@@ -228,6 +250,22 @@ public class SignActivity extends AppCompatActivity {
         else
             etPass.setError(getResources().getString(R.string.invalid_password));
 
+        //Check Password
+        if(Validator.validatePassword(confpass))
+            validConfPass = true;
+        else
+            etConfPass.setError(getResources().getString(R.string.invalid_password));
+
+        //password confirmation
+        if(validPass && validConfPass)
+            if(pass.equals(confpass))
+                passCheck = true;
+            else {
+                etConfPass.setError(getResources().getString(R.string.mismatch_password));
+                etConfPass.setText("");
+            }
+
+
         //Check Name
         if(Validator.validateText(name)){
             validName = true;
@@ -241,7 +279,7 @@ public class SignActivity extends AppCompatActivity {
         else
             etBirthdate.setError(getResources().getString(R.string.invalid_birthdate));
 
-        return validEmail && validPass && validName && validBirth;
+        return validEmail && validPass && validConfPass && passCheck && validName && validBirth;
     }
 
     private void saveProfilePref() {
