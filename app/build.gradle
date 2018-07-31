@@ -31,6 +31,7 @@ dependencies {
     //Firebase dependendcies
     implementation 'com.google.firebase:firebase-core:15.0.0'
     implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 

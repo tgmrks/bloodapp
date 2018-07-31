@@ -16,7 +16,7 @@ public class Validator {
         if (TextUtils.isEmpty(txtPass)) {
             return false;
         } else {
-            return txtPass.length() >= 4;
+            return txtPass.length() >= 6;
         }
     }
 

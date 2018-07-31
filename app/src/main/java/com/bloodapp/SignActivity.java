@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bloodapp.Model.Profile;
 import com.bloodapp.util.Utilities;
 import com.bloodapp.util.Validator;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,17 +53,16 @@ public class SignActivity extends AppCompatActivity {
     private EditText etIllness;
     private CheckBox cbIllness;
 
-    private SharedPreferences profilePref;
-
     private String selectedGender;
     private String selectedBloodtype;
+
+    private Profile profile;
+
+    private SharedPreferences profilePref;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     private FirebaseAuth mAuth;
-
-    private boolean createUser = false;
-    private boolean createProfile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,15 +138,18 @@ public class SignActivity extends AppCompatActivity {
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = etEmail.getText().toString();
-                String password = etPass.getText().toString();
+
+                profile = new Profile(
+                    null, etEmail.getText().toString(), etPass.getText().toString(),
+                    etName.getText().toString(), etSurename.getText().toString(), etContact.getText().toString(),
+                    selectedGender, selectedBloodtype, etBirthdate.getText().toString(), etIllness.getText().toString(),
+                    null, null
+                );
                 String confPassword = etConfPass.getText().toString();
-                String name = etName.getText().toString();
-                String birthday = etBirthdate.getText().toString();
-                if(fieldValidation(email, password, confPassword, name, birthday)) {
+
+                if(fieldValidation(profile.getEmail(), profile.getPass(), confPassword, profile.getName(), profile.getBirthdate())) {
                     saveProfilePref();
-                    FirebaseCreateProfile("others");
-                    FirebaseCreateUser(email, password);
+                    FirebaseCreateUser(profile.getEmail(), profile.getPass());
                 }
                 else
                     Toast.makeText(SignActivity.this, getResources().getString(R.string.check_valid_field), Toast.LENGTH_LONG).show();
@@ -191,6 +194,11 @@ public class SignActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            profile.setUid(user.getUid());
+                            Log.i("Firebase UID", user.getUid());
+                            profile.saveFirebaseRD(user.getUid());
+
                             startActivity(new Intent(SignActivity.this, HomeActivity.class));
                             finish();
                         } else {
@@ -213,8 +221,8 @@ public class SignActivity extends AppCompatActivity {
                 });
     }
 
-    private boolean FirebaseCreateProfile(String others) {
-        return true;
+    private void FirebaseCreateProfile(Profile profile) {
+
     }
 
     //carrega as opçoes do dropdown
