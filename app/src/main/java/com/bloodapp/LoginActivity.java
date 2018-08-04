@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bloodapp.Model.Profile;
+import com.bloodapp.util.Mock;
 import com.bloodapp.util.Utilities;
 import com.bloodapp.util.Validator;
 
@@ -39,9 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button sign;
 
-    //o SharedPreferences será usado para gravar os dados temporariamente
-    private SharedPreferences profilePref;
-
     private FirebaseAuth mAuth;
 
     //onCreate é o que cria toda a Activity
@@ -60,12 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.buttonLogin);
         sign = (Button) findViewById(R.id.buttonSign);
 
-        profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
-
         //Autenticacao com Firebase
         mAuth = FirebaseAuth.getInstance();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+
 
         //setOnClickListener é o que vai "ouvir" a interação do usuário com um componente, neste caso o botão login
         login.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-    private boolean FirebaseSignIn(String email,String password) {
+    private boolean FirebaseSignIn(final String email, final String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -111,6 +107,13 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d( TAG + " Sign In", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            Profile profile = new Profile(user.getUid(), email, password);
+                            Mock mock = new Mock(LoginActivity.this);
+                            mock.saveProfilePref(profile);
+
+                            profile.readFirebaseRD(user.getUid(),LoginActivity.this, TAG);
+
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             finish();
                         } else {
@@ -153,16 +156,6 @@ public class LoginActivity extends AppCompatActivity {
             validPass = true;
         else
             etPass.setError(getResources().getString(R.string.invalid_password));
-
-     /*   String localEmail = profilePref.getString(Utilities.EMAIL, "");
-        String localPass = profilePref.getString(Utilities.PASSWORD, "");
-        //Check Login exists
-        if(!localEmail.equals("") && !localPass.equals("")){
-        }
-        else {
-            etEmail.setError(getResources().getString(R.string.invalid_email));
-            etPass.setError(getResources().getString(R.string.invalid_password));
-    } */
 
         return validEmail && validPass;
     }

@@ -20,8 +20,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bloodapp.Model.Profile;
+import com.bloodapp.util.Mock;
 import com.bloodapp.util.Utilities;
 import com.bloodapp.util.Validator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 
@@ -29,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "ProfileActivity";
 
-    private EditText etFirstname;
+    private EditText etName;
     private EditText etSurename;
     private EditText etEmail;
     private EditText etPass;
@@ -43,19 +46,23 @@ public class ProfileActivity extends AppCompatActivity {
     private Button btnCancel;
     private Button btnConfirm;
 
-    private SharedPreferences profilePref;
-
     private String selectedGender;
     private String selectedBloodtype;
 
+    private Profile currentProfile;
+    private Profile updatedProfile;
+
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+
+    FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        etFirstname = (EditText) findViewById(R.id.profile_edit_name);
+        etName = (EditText) findViewById(R.id.profile_edit_name);
         etSurename = (EditText) findViewById(R.id.profile_edit_surename);
         etEmail = (EditText) findViewById(R.id.profile_edit_email);
         etPass = (EditText) findViewById(R.id.profile_edit_pass);
@@ -72,7 +79,10 @@ public class ProfileActivity extends AppCompatActivity {
         etEmail.setKeyListener(null);
         etPass.setKeyListener(null);
 
-        loadProfilePref();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        loadCurrentProfile();
 
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -86,12 +96,19 @@ public class ProfileActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(fieldValidation(etEmail.getText().toString(),
-                        etPass.getText().toString(),
-                        etFirstname.getText().toString(),
-                        etBirthdate.getText().toString()
-                )) {
-                    saveProfilePref();
+                if(fieldValidation(etName.getText().toString(),etBirthdate.getText().toString())) {
+
+                    updatedProfile = new Profile(
+                            null, user.getEmail(), null,
+                            etName.getText().toString(), etSurename.getText().toString(), etContact.getText().toString(),
+                            selectedGender, selectedBloodtype, etBirthdate.getText().toString(), etIllness.getText().toString(),
+                            null, null
+                    );
+
+                    if(!checkProfileChange(currentProfile, updatedProfile)){
+                        updatedProfile.saveFirebaseRD(user.getUid(),ProfileActivity.this);
+                    }
+
                     startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
                     finish();
                 }
@@ -155,18 +172,20 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    private void loadProfilePref(){
-        profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
-        etEmail.setText(profilePref.getString(Utilities.EMAIL, ""));
-        etPass.setText(profilePref.getString(Utilities.PASSWORD, ""));
-        etFirstname.setText(profilePref.getString(Utilities.NAME, ""));
-        etSurename.setText(profilePref.getString(Utilities.SURENAME, ""));
-        etContact.setText(profilePref.getString(Utilities.CONTACT, ""));
-        etBirthdate.setText(profilePref.getString(Utilities.BIRTHDATE, ""));
-        etIllness.setText(profilePref.getString(Utilities.ILLNESS, ""));
+    private void loadCurrentProfile(){
+        currentProfile = new Profile();
+        currentProfile = new Mock(ProfileActivity.this).loadProfilePref();
 
-        String gender = profilePref.getString(Utilities.GENDER, "");
-        String bloodType = profilePref.getString(Utilities.BLOODTYPE, "");
+        etEmail.setText(currentProfile.getEmail());
+        etPass.setText(currentProfile.getPass());
+        etName.setText(currentProfile.getName());
+        etSurename.setText(currentProfile.getSurename());
+        etContact.setText(currentProfile.getContact());
+        etBirthdate.setText(currentProfile.getBirthdate());
+        etIllness.setText(currentProfile.getIllness());
+
+        String gender = currentProfile.getGender();
+        String bloodType = currentProfile.getBloddType();
 
         loadSpinner(gender, bloodType);
     }
@@ -178,7 +197,7 @@ public class ProfileActivity extends AppCompatActivity {
         spnBloodType.setAdapter(adapter1);
 
         if (!bloodType.equals("")) {
-            int spinnerPostion = adapter1.getPosition(gender);
+            int spinnerPostion = adapter1.getPosition(bloodType);
             spnBloodType.setSelection(spinnerPostion);
             spinnerPostion = 0;
         }
@@ -194,31 +213,17 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private boolean fieldValidation(String email, String pass, String name, String birthdate) {
+    private boolean fieldValidation(String name, String birthdate) {
 
-        boolean validEmail = false;
-        boolean validPass = false;
         boolean validName = false;
         boolean validBirth = false;
-
-        //Check Email
-        if(Validator.validateEmail(email))
-            validEmail = true;
-        else
-            etEmail.setError(getResources().getString(R.string.invalid_email));
-
-        //Check Password
-        if(Validator.validatePassword(pass))
-            validPass = true;
-        else
-            etPass.setError(getResources().getString(R.string.invalid_password));
 
         //Check Name
         if(Validator.validateText(name)){
             validName = true;
         }
         else
-            etFirstname.setError(getResources().getString(R.string.invalid_name));
+            etName.setError(getResources().getString(R.string.invalid_name));
 
         //Check birth date
         if(Validator.validateText(birthdate))
@@ -226,19 +231,19 @@ public class ProfileActivity extends AppCompatActivity {
         else
             etBirthdate.setError(getResources().getString(R.string.invalid_birthdate));
 
-        return validEmail && validPass && validName && validBirth;
+        return validName && validBirth;
     }
 
-    private void saveProfilePref() {
-        profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
-        profilePref.edit().putString(Utilities.NAME, etFirstname.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.SURENAME, etSurename.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.EMAIL, etEmail.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.PASSWORD, etPass.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.CONTACT, etContact.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.GENDER, selectedGender).commit();
-        profilePref.edit().putString(Utilities.BLOODTYPE, selectedBloodtype).commit();
-        profilePref.edit().putString(Utilities.BIRTHDATE, etBirthdate.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.ILLNESS, etIllness.getText().toString()).commit();
+    private boolean checkProfileChange(Profile current, Profile updated) {
+        boolean name = Validator.isSameText(Utilities.NAME, current.getName(), updated.getName());
+        boolean surename = Validator.isSameText(Utilities.SURENAME, current.getSurename(), updated.getSurename());
+        boolean contact = Validator.isSameText(Utilities.CONTACT, current.getContact(), updated.getContact());
+        boolean birthdate = Validator.isSameText(Utilities.BIRTHDATE, current.getBirthdate(), updated.getBirthdate());
+        boolean gender = Validator.isSameText(Utilities.GENDER, current.getGender(), updated.getGender());
+        boolean bloodtype = Validator.isSameText(Utilities.BLOODTYPE, current.getBloddType(), updated.getBloddType());
+        boolean ilness = Validator.isSameText(Utilities.ILLNESS, current.getIllness(), updated.getIllness());
+
+        return name && surename && contact && birthdate && gender && bloodtype && ilness;
     }
+
 }

@@ -3,8 +3,6 @@ package com.bloodapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,14 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bloodapp.util.Mock;
 import com.bloodapp.util.Utilities;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "HomeActivity";
-
-    private SharedPreferences profilePref;
 
     private DrawerLayout mDrawerLayout;
 
@@ -78,17 +75,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
                 }
         );
 
-        profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
-        Log.i(TAG, profilePref.getString(Utilities.NAME, ""));
-        Log.i(TAG, profilePref.getString(Utilities.SURENAME, ""));
-        Log.i(TAG, profilePref.getString(Utilities.EMAIL, ""));
-        Log.i(TAG, profilePref.getString(Utilities.PASSWORD, ""));
-        Log.i(TAG, profilePref.getString(Utilities.CONTACT, ""));
-        Log.i(TAG, profilePref.getString(Utilities.GENDER, ""));
-        Log.i(TAG, profilePref.getString(Utilities.BLOODTYPE, ""));
-        Log.i(TAG, profilePref.getString(Utilities.BIRTHDATE, ""));
-        Log.i(TAG, profilePref.getString(Utilities.ILLNESS, ""));
-
+        new Mock(HomeActivity.this).listProfilePref(TAG);
     }
 
     //faz o menu lateral abrir quando clicar no menu button
@@ -137,7 +124,5 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-//TODO: logout $FirebaseAuth.getInstance().signOut();
 
 }

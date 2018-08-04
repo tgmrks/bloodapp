@@ -58,8 +58,6 @@ public class SignActivity extends AppCompatActivity {
 
     private Profile profile;
 
-    private SharedPreferences profilePref;
-
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     private FirebaseAuth mAuth;
@@ -148,7 +146,6 @@ public class SignActivity extends AppCompatActivity {
                 String confPassword = etConfPass.getText().toString();
 
                 if(fieldValidation(profile.getEmail(), profile.getPass(), confPassword, profile.getName(), profile.getBirthdate())) {
-                    saveProfilePref();
                     FirebaseCreateUser(profile.getEmail(), profile.getPass());
                 }
                 else
@@ -197,8 +194,7 @@ public class SignActivity extends AppCompatActivity {
 
                             profile.setUid(user.getUid());
                             Log.i("Firebase UID", user.getUid());
-                            profile.saveFirebaseRD(user.getUid());
-
+                            profile.saveFirebaseRD(user.getUid(), SignActivity.this);
                             startActivity(new Intent(SignActivity.this, HomeActivity.class));
                             finish();
                         } else {
@@ -219,10 +215,6 @@ public class SignActivity extends AppCompatActivity {
                         // ...
                     }
                 });
-    }
-
-    private void FirebaseCreateProfile(Profile profile) {
-
     }
 
     //carrega as opçoes do dropdown
@@ -290,16 +282,4 @@ public class SignActivity extends AppCompatActivity {
         return validEmail && validPass && validConfPass && passCheck && validName && validBirth;
     }
 
-    private void saveProfilePref() {
-        profilePref = getSharedPreferences(Utilities.PREF_NAME, Context.MODE_PRIVATE);
-        profilePref.edit().putString(Utilities.NAME, etName.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.SURENAME, etSurename.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.EMAIL, etEmail.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.PASSWORD, etPass.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.CONTACT, etContact.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.GENDER, selectedGender).commit();
-        profilePref.edit().putString(Utilities.BLOODTYPE, selectedBloodtype).commit();
-        profilePref.edit().putString(Utilities.BIRTHDATE, etBirthdate.getText().toString()).commit();
-        profilePref.edit().putString(Utilities.ILLNESS, etIllness.getText().toString()).commit();
-    }
 }
