@@ -181,7 +181,6 @@ public class Profile {
                 Log.d(TAG, "Value is: " + value);
                 //Log.d(TAG, "Object is: " + object);
 
-
                 try { setName(dataSnapshot.child(Utilities.PROFILES).child(uid).child(Utilities.name_FIELD).getValue().toString()); } catch (Exception e) { Log.d(Utilities.name_FIELD, "FAILED"); }
                 try { setSurename(dataSnapshot.child(Utilities.PROFILES).child(uid).child(Utilities.surename_FIELD).getValue().toString()); } catch (Exception e) { Log.d(Utilities.surename_FIELD, "FAILED"); }
                 try { setContact(dataSnapshot.child(Utilities.PROFILES).child(uid).child(Utilities.contact_FIELD).getValue().toString()); } catch (Exception e) { Log.d(Utilities.contact_FIELD, "FAILED"); }
@@ -193,7 +192,7 @@ public class Profile {
                 Mock mock = new Mock(context);
                 mock.saveProfilePref(Profile.this);
 
-                 print();
+                print();
 
             }
 

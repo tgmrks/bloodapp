@@ -1,7 +1,6 @@
 package com.bloodapp;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,15 +8,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bloodapp.Model.Content;
+import com.bloodapp.util.HomeItemAdapter;
 import com.bloodapp.util.Mock;
-import com.bloodapp.util.Utilities;
+import com.bloodapp.util.RecyclerViewClickListener;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,11 +31,32 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
 
     private DrawerLayout mDrawerLayout;
 
+    private RecyclerView recyclerView;
+
+    private HomeItemAdapter itemAdapter;
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        RecyclerViewClickListener listener = new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(HomeActivity.this, "Position " + position, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        ArrayList<Content> itemList = new ArrayList<>();
+        fillDummyContent(itemList);
+        recyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
+        itemAdapter = new HomeItemAdapter(itemList, listener);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(itemAdapter);
+
 
         //Definição do Toolbar (cabeçalho) e Menu Button
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -76,6 +103,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         );
 
         new Mock(HomeActivity.this).listProfilePref(TAG);
+
     }
 
     //faz o menu lateral abrir quando clicar no menu button
@@ -125,4 +153,11 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         return true;
     }
 
+    private void fillDummyContent (ArrayList<Content> itemList) {
+
+        itemList.add(new Content("Title 1"));
+        itemList.add(new Content("Title 2"));
+        itemList.add(new Content("Title 3"));
+        itemList.add(new Content("Title 4"));
+    }
 }
