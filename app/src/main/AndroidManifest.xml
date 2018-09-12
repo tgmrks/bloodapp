@@ -24,7 +24,7 @@
         <activity android:name=".AboutActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ConfigActivity" />
-        <activity android:name=".ResetActivity"></activity>
+        <activity android:name=".ResetActivity" />
 
         <service android:name=".service.MyFirebaseMessagingService">
             <intent-filter>
@@ -43,6 +43,11 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest><!--

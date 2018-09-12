@@ -2,6 +2,7 @@ package com.bloodapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +24,10 @@ import com.bloodapp.util.Mock;
 import com.bloodapp.util.RecyclerViewClickListener;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.Format;
 import java.util.ArrayList;
+
+import javax.xml.datatype.DatatypeConstants;
 
 public class HomeActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +39,8 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
 
     private HomeItemAdapter itemAdapter;
 
+    private ArrayList<Content> itemList;
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +50,19 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(HomeActivity.this, "Position " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(HomeActivity.this, "Position " + position, Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(getBaseContext(), DetailActivity.class);
+                Bundle param = new Bundle();
+                param.putInt("id", view.getId());
+                param.putInt("position", position);
+                param.putString("title", itemList.get(position).getTitle());
+                param.putInt("draw", itemList.get(position).getDrawId());
+                it.putExtras(param);
+                startActivity(it); //finish();
             }
         };
 
-        ArrayList<Content> itemList = new ArrayList<>();
+        itemList = new ArrayList<>();
         fillDummyContent(itemList);
         recyclerView = (RecyclerView) findViewById(R.id.home_recycler_view);
         itemAdapter = new HomeItemAdapter(itemList, listener);
@@ -155,9 +169,8 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
 
     private void fillDummyContent (ArrayList<Content> itemList) {
 
-        itemList.add(new Content("Title 1"));
-        itemList.add(new Content("Title 2"));
-        itemList.add(new Content("Title 3"));
-        itemList.add(new Content("Title 4"));
+        itemList.add(new Content("Como ser um doador ?", R.drawable.cap3));
+        itemList.add(new Content("Quem não pode doar ?", R.drawable.cap2));
+        itemList.add(new Content("Por que doar sangue ?", R.drawable.cap1));
     }
 }

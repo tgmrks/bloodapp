@@ -1,11 +1,15 @@
 package com.bloodapp.Model;
 
+import android.graphics.drawable.Drawable;
+
 public class Content {
 
     private int id;
     private String title;
     private String subTitle;
-    private byte[] thumbnail;
+    private Drawable drawable;
+    private byte thumbnail;
+    private int drawId;
     private boolean status;
 
     public int getId() {
@@ -32,14 +36,6 @@ public class Content {
         this.subTitle = subTitle;
     }
 
-    public byte[] getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(byte[] thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
     public boolean isStatus() {
         return status;
     }
@@ -48,7 +44,28 @@ public class Content {
         this.status = status;
     }
 
-    public Content(String title) {
+    public Drawable getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
+    }
+
+    public void setThumbnail(byte thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public int getDrawId() {
+        return drawId;
+    }
+
+    public void setDrawId(int drawId) {
+        this.drawId = drawId;
+    }
+
+    public Content(String title, int drawId) {
         this.title = title;
+        this.drawId = drawId;
     }
 }

@@ -116,4 +116,5 @@ Daniel Tavelli\n(xx)xxxxx-xxxx\ndan.tavelli.2@gmail.com
 
     <string name="firebase_reset_mail_bad_formatted_failure">Email mal formatado!</string>
     <string name="firebase_reset_mail_no_record_failure">Email não encontrado!</string>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>

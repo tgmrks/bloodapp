@@ -39,13 +39,12 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemHolder> {
 
     @Override
     public void onBindViewHolder(HomeItemHolder holder, int position) {
-        Drawable d =  context.getResources().getDrawable(R.drawable.no_thumbnail);
+
         holder.txtTitle.setText(contentList.get(position).getTitle().toString());
-        //holder.txtSubTitle.setText(item.getSubTitle());
-        holder.imgThumb.setImageDrawable(d);
+        holder.imgThumb.setImageResource(contentList.get(position).getDrawId());
 
         for (Content c: contentList) {
-            Log.i("ItemHolder", c.getTitle());
+            Log.i("ItemHolder", position + " - " + c.getTitle());
         }
     }
 
