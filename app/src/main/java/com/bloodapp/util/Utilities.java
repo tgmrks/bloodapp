@@ -19,6 +19,8 @@ public class Utilities {
 
     //FIREBASE REALTIME DATABASE
     public static final String PROFILES = "profiles";
+    public static final String NOTIFICATIONS = "notifications";
+    public static final String TOKENS = "tokens";
 
     //PROFILE FIELDS
     public static final String email_FIELD = "email";

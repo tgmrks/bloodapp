@@ -116,7 +116,7 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
                 }
         );
 
-        new Mock(HomeActivity.this).listProfilePref(TAG);
+       // new Mock(HomeActivity.this).listProfilePref(TAG);
 
     }
 
@@ -153,8 +153,12 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
             Log.i(TAG, "ABOUT");
         }
         else if (id == R.id.nav_config) {
-            startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+            startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             Log.i(TAG, "CONFIG");
+        }
+        else if (id == R.id.nav_notif) {
+            startActivity(new Intent(HomeActivity.this, ConfigActivity.class));
+            Log.i(TAG, "NOTIFI");
         }
         else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
