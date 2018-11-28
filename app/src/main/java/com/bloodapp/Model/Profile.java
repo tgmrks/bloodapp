@@ -220,4 +220,33 @@ public class Profile {
     }
 
 
+    public void checkNotificationStatus(final Context context, String uid) {
+
+        //mDatabase.child(Utilities.TOKENS).child(uid);
+        //mDatabase.child(Utilities.TOKENS).orderByChild(uid)
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mDatabase.child(Utilities.TOKENS).child(uid)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+
+                        Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
+                        Log.d("PUSH ck", "Value is: " + value);
+                        //Log.d(TAG, "Object is: " + object);
+                        Mock mock = new Mock(context);
+                        mock.saveTokenStatus(value != null);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w("PUSH ck", "Failed to read value.", error.toException());
+                    }
+                });
+    }
+
 }

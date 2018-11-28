@@ -59,4 +59,20 @@ public class Mock {
         return profile;
     }
 
+    public void saveTokenStatus(boolean status) {
+        profilePref.edit().putBoolean(Utilities.TOKEN_STATUS, status).commit();
+    }
+
+    public boolean readTokenStatus() {
+        return profilePref.getBoolean(Utilities.TOKEN_STATUS, false);
+    }
+
+    public void saveNotificationChecked(String notification) {
+        profilePref.edit().putString(Utilities.NOTIFICATION_CHECKED, notification).commit();
+    }
+
+    public String readNotificationChecked() {
+        return profilePref.getString(Utilities.NOTIFICATION_CHECKED, "");
+    }
+
 }

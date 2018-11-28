@@ -17,6 +17,9 @@ public class Utilities {
     public static final String CITY = "city_key";
     public static final String STATE = "state_key";
 
+    public static final String TOKEN_STATUS = "token_status";
+    public static final String NOTIFICATION_CHECKED = "notification_checked";
+
     //FIREBASE REALTIME DATABASE
     public static final String PROFILES = "profiles";
     public static final String NOTIFICATIONS = "notifications";
@@ -31,5 +34,14 @@ public class Utilities {
     public static final String bloddType_FIELD = "bloddType";
     public static final String birthdate_FIELD = "birthdate";
     public static final String illness_FIELD = "illness";
+
+    //NOTIFICATION FIELDS
+    public static final String msg_uid_FIELD = "uid";
+    public static final String msg_buid_FIELD = "buid";
+    public static final String msg_address_FIELD = "address";
+    public static final String msg_body_FIELD = "message";
+    public static final String msg_date_FIELD = "date";
+    public static final String msg_user_FIELD = "user";
+
 
 }

@@ -19,10 +19,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bloodapp.Model.Content;
+import com.bloodapp.Model.Profile;
 import com.bloodapp.util.HomeItemAdapter;
 import com.bloodapp.util.Mock;
 import com.bloodapp.util.RecyclerViewClickListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.Format;
 import java.util.ArrayList;
@@ -116,7 +118,10 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
                 }
         );
 
-       // new Mock(HomeActivity.this).listProfilePref(TAG);
+        Profile profile = new Profile();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Log.d("notification check", user.getUid());
+        profile.checkNotificationStatus(HomeActivity.this, user.getUid());
 
     }
 
@@ -153,11 +158,11 @@ public class HomeActivity extends AppCompatActivity  implements NavigationView.O
             Log.i(TAG, "ABOUT");
         }
         else if (id == R.id.nav_config) {
-            startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+            startActivity(new Intent(HomeActivity.this, ConfigActivity.class));
             Log.i(TAG, "CONFIG");
         }
         else if (id == R.id.nav_notif) {
-            startActivity(new Intent(HomeActivity.this, ConfigActivity.class));
+            startActivity(new Intent(HomeActivity.this, NotificationAcitivity.class));
             Log.i(TAG, "NOTIFI");
         }
         else if (id == R.id.nav_logout) {
